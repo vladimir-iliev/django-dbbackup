@@ -22,7 +22,6 @@ class PgDumpConnector(BaseCommandDBConnector):
             cmd += ' --user={}'.format(self.settings['USER'])
         if self.settings.get('PASSWORD'):
             self.dump_env['PGPASSWORD'] = self.settings['PASSWORD']
-            cmd = cmd
         else:
             cmd += ' --no-password'
         for table in self.exclude:
@@ -42,7 +41,7 @@ class PgDumpConnector(BaseCommandDBConnector):
         if self.settings.get('USER'):
             cmd += ' --user={}'.format(self.settings['USER'])
         if self.settings.get('PASSWORD'):
-            cmd += ' --password={}'.format(self.settings['PASSWORD'])
+            self.restore_env['PGPASSWORD'] = self.settings['PASSWORD']
         else:
             cmd += ' --no-password'
         if self.single_transaction:
