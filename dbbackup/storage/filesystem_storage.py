@@ -23,6 +23,10 @@ class Storage(DjangoStorage):
         super(Storage, self).__init__(storage_path=STORAGE_PATH,
                                       **options)
 
+    @property
+    def backup_dir(self):
+        return getattr(settings, 'DBBACKUP_STORAGE_OPTIONS', {}).get('location')
+
     def _check_filesystem_errors(self, options):
         """ Check we have all the required settings defined. """
         location = options.get('location')
